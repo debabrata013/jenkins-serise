@@ -46,7 +46,7 @@ Setting up a secure, production-ready DevOps environment on a VPS to host Jenkin
    ```
 
 ### Step 4: Nginx Reverse Proxy & SSL Setup
-1. Created Nginx site configuration `/etc/nginx/sites-available/jenkins.glausco.tech` pointing to `http://127.0.0.1:8080`.
+1. Created Nginx site configuration `/etc/nginx/sites-available/jenkins.glausco.tech` pointing to `http://127.0.0.1:8081`.
 2. Linked configuration using an absolute path symlink:
    ```bash
    sudo ln -s /etc/nginx/sites-available/jenkins.glausco.tech /etc/nginx/sites-enabled/
@@ -94,7 +94,7 @@ sudo nginx -t
 
 # Verify Jenkins container
 docker ps
-# Output: Container jenkins running on port 8080 (Up and Healthy)
+# Output: Container jenkins running on port 8081 (Up and Healthy)
 ```
 
 ---
