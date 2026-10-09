@@ -15,7 +15,7 @@ This series takes a **learning-by-doing** approach. Each day focuses on a specif
 | Day | Topic / Focus Area | Key Highlights | Status |
 | :---: | :--- | :--- | :---: |
 | 🟢 **[Day 1](day-1/)** | **VPS Security & Jenkins Setup** | Docker Compose, Non-root Dev User, Nginx Reverse Proxy, Certbot SSL, Timezone Fix | ✅ Completed |
-| 🔵 **Day 2** | *Jenkins Plugins & Credentials Management* | Secret management, SSH credentials, essential plugins | ⏳ Upcoming |
+| 🟢 **[Day 2](day-2/)** | **Bash Scripting & Dockerization** | Health Diagnostic Script, Alpine Dockerfile, Container Entrypoints | ✅ Completed |
 | 🔵 **Day 3** | *Freestyle Jobs & Scripted Pipelines* | Git SCM integration, Shell scripts, Build triggers | ⏳ Upcoming |
 | 🔵 **Day 4** | *Declarative Jenkinsfile & Pipelines* | Stage breakdown, environment variables, post-build actions | ⏳ Upcoming |
 | 🔵 **Day 5** | *Docker in Jenkins (DIND & Socket Binding)* | Building Docker images inside pipelines & pushing to registry | ⏳ Upcoming |
