@@ -10,15 +10,23 @@ NC='\033[0m' # No Color
 
 APP_NAME="${APP_NAME:-DevOps Health Monitor}"
 TARGET_URL="${TARGET_URL:-https://httpbin.org/status/200}"
-CHECK_INTERVAL="${CHECK_INTERVAL:-5}"
+CHECK_INTERVAL="${CHECK_INTERVAL:-2}"
+MAX_RUNS="${MAX_RUNS:-5}"
+
+# Handle argument flags
+if [ "$1" = "--once" ]; then
+    MAX_RUNS=1
+elif [[ "$1" =~ ^[0-9]+$ ]]; then
+    MAX_RUNS="$1"
+fi
 
 echo -e "${BLUE}===========================================${NC}"
-echo -e "${GREEN}🚀 Starting ${APP_NAME}${NC}"
+echo -e "${GREEN}🚀 Starting ${APP_NAME} (${MAX_RUNS} runs)${NC}"
 echo -e "${BLUE}===========================================${NC}"
 
 monitor_system() {
     TIMESTAMP=$(date "+%Y-%m-%d %H:%M:%S")
-    echo -e "\n${YELLOW}[${TIMESTAMP}] Running Diagnostics...${NC}"
+    echo -e "${YELLOW}[${TIMESTAMP}] Running Diagnostics...${NC}"
     
     # Disk Usage Check
     DISK_USAGE=$(df -h / | awk 'NR==2 {print $5}')
@@ -42,17 +50,17 @@ monitor_system() {
     fi
 }
 
-# Run once if --once flag passed, otherwise loop
-if [ "$1" = "--once" ]; then
+trap "echo -e '\n${RED}Shutting down monitor service...${NC}'; exit 0" SIGINT SIGTERM
+
+for (( i=1; i<=MAX_RUNS; i++ )); do
+    echo -e "\n${BLUE}--- Run ${i} of ${MAX_RUNS} ---${NC}"
     monitor_system
-else
-    trap "echo -e '\n${RED}Shutting down monitor service...${NC}'; exit 0" SIGINT SIGTERM
     
-    # Run once immediately, then loop
-    monitor_system
-    while true; do
+    # Sleep between runs, except after the last run
+    if [ "$i" -lt "$MAX_RUNS" ]; then
         echo -e "${BLUE}Sleeping for ${CHECK_INTERVAL}s...${NC}"
         sleep "${CHECK_INTERVAL}"
-        monitor_system
-    done
-fi
+    fi
+done
+
+echo -e "\n${GREEN}🎉 Completed all ${MAX_RUNS} diagnostic runs!${NC}"
