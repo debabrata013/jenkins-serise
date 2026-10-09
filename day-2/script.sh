@@ -21,7 +21,7 @@ elif [[ "$1" =~ ^[0-9]+$ ]]; then
 fi
 
 echo -e "${BLUE}===========================================${NC}"
-echo -e "${GREEN}🚀 Starting ${APP_NAME} (${MAX_RUNS} runs)${NC}"
+echo -e "${GREEN}Starting ${APP_NAME} (${MAX_RUNS} runs)${NC}"
 echo -e "${BLUE}===========================================${NC}"
 
 monitor_system() {
@@ -30,22 +30,22 @@ monitor_system() {
     
     # Disk Usage Check
     DISK_USAGE=$(df -h / | awk 'NR==2 {print $5}')
-    echo -e "💾 Disk Usage (/): ${DISK_USAGE}"
+    echo -e " Disk Usage (/): ${DISK_USAGE}"
     
     # Memory Check
     if command -v free >/dev/null 2>&1; then
         MEM_USED=$(free -m | awk 'NR==2{printf "%.2f%%", $3*100/$2 }')
-        echo -e "🧠 Memory Used: ${MEM_USED}"
+        echo -e " Memory Used: ${MEM_USED}"
     fi
 
     # Network / Health Check
     if command -v curl >/dev/null 2>&1; then
-        echo -e "🌐 Checking Endpoint: ${TARGET_URL}"
+        echo -e " Checking Endpoint: ${TARGET_URL}"
         HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" --max-time 5 "${TARGET_URL}" || echo "FAILED")
         if [ "$HTTP_CODE" = "200" ]; then
-            echo -e "${GREEN}✅ Endpoint Health: UP (HTTP ${HTTP_CODE})${NC}"
+            echo -e "${GREEN} Endpoint Health: UP (HTTP ${HTTP_CODE})${NC}"
         else
-            echo -e "${RED}❌ Endpoint Health: DOWN/UNREACHABLE (HTTP ${HTTP_CODE})${NC}"
+            echo -e "${RED} Endpoint Health: DOWN/UNREACHABLE (HTTP ${HTTP_CODE})${NC}"
         fi
     fi
 }
@@ -63,4 +63,4 @@ for (( i=1; i<=MAX_RUNS; i++ )); do
     fi
 done
 
-echo -e "\n${GREEN}🎉 Completed all ${MAX_RUNS} diagnostic runs!${NC}"
+echo -e "\n${GREEN} Completed all ${MAX_RUNS} diagnostic runs!${NC}"
